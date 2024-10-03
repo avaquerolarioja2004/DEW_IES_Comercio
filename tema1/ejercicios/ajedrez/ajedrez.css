@@ -1,9 +1,16 @@
-.impar{
+.impar {
     background-color: black;
     height: 50px;
     width: 50px;
 }
-.par{
+
+.par {
+    background-color: white;
+    height: 50px;
+    width: 50px;
+}
+
+.side {
     background-color: white;
     height: 50px;
     width: 50px;
