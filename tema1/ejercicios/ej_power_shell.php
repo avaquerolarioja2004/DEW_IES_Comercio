@@ -11,7 +11,7 @@ foreach ($lines as $line) {
     echo implode(" ", $line_splited);
 
     if (is_numeric($pid)) {
-        $pid_info = shell_exec('powershell -Command get-Process -Id '.$pid.' -FileVersionInfo');
+        $pid_info = shell_exec('wmic process where ProcessId='.$pid.' get Name,ExecutablePath 2>nul');
 
         if (trim($pid_info)) {
             echo "\n   Proceso: " . trim($pid_info);
