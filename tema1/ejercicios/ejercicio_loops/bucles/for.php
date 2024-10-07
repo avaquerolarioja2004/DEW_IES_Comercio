@@ -4,7 +4,7 @@ $tipos=range('a','z');
 $lista='';
 for ($i = 0; $i < count($tipos); $i++) {
     $opcion=$tipos[$i];
-    echo $lista.= '<li><a href="../abecedario/'.$opcion.'.php">'.$opcion.'</a></li>';
+    $lista.= '<li><a href="../abecedario/'.$opcion.'.php">'.$opcion.'</a></li>';
 
 }
 
@@ -15,11 +15,11 @@ for ($i = 0; $i < count($tipos); $i++) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loops</title>
+    <title>For</title>
 </head>
 <body>
     <ul>
-        <?php $lista ?>
+        <?php echo $lista ?>
     </ul>
 </body>
 </html>

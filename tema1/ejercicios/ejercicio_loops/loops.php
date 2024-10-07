@@ -11,7 +11,7 @@
 $tipos=['doWhile','while','for','foreach'];
 $lista='';
 foreach($tipos as $opcion){
-    echo $lista.= '<li><a href="./bucles/'.$opcion.'.php">'.$opcion.'</a></li>';
+    $lista.= '<li><a href="./bucles/'.$opcion.'.php">'.$opcion.'</a></li>';
 
 }
 
@@ -26,7 +26,7 @@ foreach($tipos as $opcion){
 </head>
 <body>
     <ul>
-        <?php $lista ?>
+        <?php echo $lista ?>
     </ul>
 </body>
 </html>
