@@ -1,4 +1,4 @@
 <?php
 include '../../tools/functions.php';
-sanitizar('<h1>Hola</h1>');
+echo sanitizar('<h1>Hola</h1>');
 ?>
