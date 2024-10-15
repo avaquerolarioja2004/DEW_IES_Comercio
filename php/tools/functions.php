@@ -76,5 +76,4 @@ function genNav(array $asociativo): string {
     return $var;
 }
 
-
 ?>
