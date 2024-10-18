@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 class CocheDeportivo extends Coche{
-    private int $velocidad_max;
+    protected int $velocidad_max;
     function __construct(string $marca, string $modelo, int $ano, int $velocidad_max)
     {
         $this->marca=$marca;
@@ -11,8 +11,25 @@ class CocheDeportivo extends Coche{
         $this->velocidad_max=$velocidad_max;
     }
 
-    function acelerar(){
-        
+    public function acelerar(){
+        echo 'Acelerooooooooo';
+    }
+
+    public function getVelocidadMax():int{
+        return $this->velocidad_max;
+    }
+
+    public function setVelocidadMax(int $velocidad_max):bool{
+        if($this->velocidad_max=$velocidad_max){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function __destruct()
+    {
+        echo "Este coche era un: {$this->GetMarca()}, {$this->GetModelo()}, del año {$this->GetAno()}, tiene una velocidad máxima de {$this->GetVelocidadMax()} y está {$this->GetEncendido()}";
     }
 }
 
