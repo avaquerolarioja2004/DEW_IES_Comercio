@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 /*
-Sin constructor
+Con constructor
 Confeccionar una clase CabeceraPagina que permita mostrar un título, 
 indicarle si queremos que aparezca centrado, a derecha o izquierda, 
 además permitir definir el color de fondo y de la fuente
 */
 
-class CabeceraPagina4{
+class CabeceraPagina5{
     //texto
     private $texto;
     //pos
@@ -21,12 +21,17 @@ class CabeceraPagina4{
     private int $g2=0;
     private int $b2=0;
 
+    public function __construct($texto)
+    {
+        $this->texto=$texto;
+    }
+
     public function setTexto($texto){
         $this->texto=$texto;
     }
 
 
-    public function getTexto():string{
+    public function getTexto(){
         return $this->texto;
     }
 
@@ -58,9 +63,7 @@ class CabeceraPagina4{
         return "rgb($this->r2 , $this->g2 , $this->b2)";
     }
 }
-    $texto=new CabeceraPagina4();
-    $texto->setTexto('Hola Mundo');
-    $texto->setColor(10,50,60);
+    $texto=new CabeceraPagina5('Hola Mundo');
     $texto->setColor(10,50,60);
     $texto->setBackColor(0,10,0);
     $texto->setPos('left');
