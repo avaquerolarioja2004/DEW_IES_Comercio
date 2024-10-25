@@ -1,6 +1,7 @@
 <?php
-
 declare(strict_types=1);
+namespace Student;
+
 class Student
 {
     private int $id;
