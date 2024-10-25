@@ -1,16 +1,20 @@
 <?php
 declare(strict_types=1);
-include_once '../crud/crudAlumno.php';
-class Clase implements crudAlumno{ //Base de datos mediante arrays
+
+require_once __DIR__ . '/../crud/crudAlumno.php';
+
+class Clase implements CrudAlumno{ //Base de datos mediante arrays
     private string $nombreClase;
     private int $numMaxAlumnos;
     private array $alumnos;
     private Profesor $profesor;
+    private static int $numAlumnos;
 
     public function __construct(string $nombre, int $numMax)
     {
         $this->nombreClase=$nombre;
         $this->numMaxAlumnos=$numMax;
+        $this->numAlumnos=0;
     }
 
     public function getAlumno(int $id): Alumno //Get Alumno
@@ -47,9 +51,16 @@ class Clase implements crudAlumno{ //Base de datos mediante arrays
             if($alumno->getId()==$idAlumno){
                 $alumnoRet=$alumno;
                 unset($alumno,$this->alumnos);
+                $this->numAlumnos-=1;
             }
         }
         return $alumnoRet;
+    }
+
+    public function despedirProfesor(int $idProfesor) : Profesor { //Borrar
+        $profesor=$this->profesor;
+        $this->profesor=null;
+        return $profesor;
     }
 
     public function getInfo():string{

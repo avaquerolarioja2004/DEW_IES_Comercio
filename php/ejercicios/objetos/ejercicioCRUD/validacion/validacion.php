@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
-
-class Validacion implements ValidacionABS{
+require_once __DIR__ . '/validacionABS.php';
+class Validacion extends ValidacionABS{
     public static function validarEntrada(string $var) : string {
         return htmlentities(trim($var));
     }

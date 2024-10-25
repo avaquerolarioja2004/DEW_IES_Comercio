@@ -1,7 +1,6 @@
 <?php
-
 declare(strict_types=1);
-include_once 'Persona.php';
+require_once 'persona.php';
 class Alumno extends Persona
 {
     private static $contador = 0;
