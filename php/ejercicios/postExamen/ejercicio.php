@@ -42,8 +42,7 @@ function filtrarPorLetra(array $contenido, ?string $letra): array
     if (!$letra) {
         return $contenido;
     }
-
-    $letra = strtoupper($letra);
+    
     foreach ($contenido as &$directorio) {
         $directorio['archivos'] = array_filter($directorio['archivos'], function ($archivo) use ($letra) {
             return strtoupper($archivo[0]) === $letra;
