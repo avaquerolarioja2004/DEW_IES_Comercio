@@ -36,40 +36,35 @@ Hay dos ficheros dentro de cada fichero hay comunidades ordenadas alfabeticament
 $f1 = fopen('f1.txt', 'r');
 $f2 = fopen('f2.txt', 'r');
 $f3 = fopen('f3.txt', 'w');
-$moverse = true;
+
 $var1 = fgets($f1);
 $var2 = fgets($f2);
 
-while (!feof($f1) && !feof($f2)) {
-    if ($var1 > $var2) {
-        fwrite($f3, $var1);
-        $moverse = true;
-    } elseif ($var1 < $var2) {
-        fwrite($f3, $var2);
-        $moverse = false;
-    } else {  
-        fwrite($f3, $var1);  
+while ($var1 !== false && $var2 !== false) {
+    if (strcasecmp(trim($var1), trim($var2)) < 0) {
+        fwrite($f3, trim($var1) . "\n");
         $var1 = fgets($f1);
+    } elseif (strcasecmp(trim($var1), trim($var2)) > 0) {
+        fwrite($f3, trim($var2) . "\n");
         $var2 = fgets($f2);
-        continue; 
-    }
-
-    if ($moverse) {
-        $var1 = fgets($f1);
     } else {
+        fwrite($f3, trim($var1) . "\n");
+        $var1 = fgets($f1);
         $var2 = fgets($f2);
     }
 }
-while (!feof($f1)) {
-    fwrite($f3, $var1);
+
+while ($var1 !== false) {
+    fwrite($f3, trim($var1) . "\n");
     $var1 = fgets($f1);
 }
 
-while (!feof($f2)) {
-    fwrite($f3, $var2);
+while ($var2 !== false) {
+    fwrite($f3, trim($var2) . "\n");
     $var2 = fgets($f2);
 }
 
 fclose($f1);
 fclose($f2);
 fclose($f3);
+
