@@ -42,29 +42,50 @@ $var2 = fgets($f2);
 
 while ($var1 !== false && $var2 !== false) {
     if (strcasecmp(trim($var1), trim($var2)) < 0) {
-        fwrite($f3, trim($var1) . "\n");
+        fwrite($f3, $var1);
         $var1 = fgets($f1);
     } elseif (strcasecmp(trim($var1), trim($var2)) > 0) {
-        fwrite($f3, trim($var2) . "\n");
+        fwrite($f3, $var2);
         $var2 = fgets($f2);
     } else {
-        fwrite($f3, trim($var1) . "\n");
+        fwrite($f3, $var1);
         $var1 = fgets($f1);
         $var2 = fgets($f2);
     }
 }
 
 while ($var1 !== false) {
-    fwrite($f3, trim($var1) . "\n");
+    fwrite($f3, "\n" . trim($var1));
     $var1 = fgets($f1);
 }
 
 while ($var2 !== false) {
-    fwrite($f3, trim($var2) . "\n");
+    fwrite($f3, "\n" . trim($var2));
     $var2 = fgets($f2);
 }
 
 fclose($f1);
 fclose($f2);
 fclose($f3);
+
+/*
+Crea un script en PHP que realice lo siguiente:
+
+Leer el contenido de una página web utilizando la función file_get_contents.
+Eliminar todas las etiquetas HTML del contenido obtenido, de modo que solo se conserve el texto visible.
+Eliminar cualquier bloque de código JavaScript que se encuentre en el contenido.
+Mostrar el texto limpio en la salida del script.
+*/
+function cleanHtml($url) {
+    $content = file_get_contents($url);
+    //$content = preg_replace('/<script.*?<\/script>/is', '', $content);
+    $content = preg_replace('/<(script).*?<\/\\1>/is', '', $content);
+    return strip_tags($content);
+}
+
+$url = "./test.html";
+$cleanText = cleanHtml($url);
+echo trim($cleanText);
+?>
+
 
