@@ -21,4 +21,12 @@ class Producto {
     public function getPrecio() {
         return $this->precio;
     }
+
+    public function setNombre($nombre) {
+        $this->nombre=$nombre;
+    }
+
+    public function setPrecio($precio) {
+        $this->precio=$precio;
+    }
 }
