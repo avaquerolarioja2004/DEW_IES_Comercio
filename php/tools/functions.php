@@ -35,7 +35,7 @@ function fechaFormateada(string $fecha): string
 
 /*
 sanitizar admite una cadena y nos la devuelve sin ningun caracter especial (espacios, /, \) 
-retornará la cadena traducina a html
+retornará la cadena traducida a html
 */
 
 function sanitizar(string $var) : string {
