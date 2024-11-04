@@ -1,8 +1,8 @@
 <?php
 class Producto {
-    public $id;
-    public $nombre;
-    public $precio;
+    private $id;
+    private $nombre;
+    private $precio;
 
     public function __construct($id, $nombre, $precio) {
         $this->id = $id;
