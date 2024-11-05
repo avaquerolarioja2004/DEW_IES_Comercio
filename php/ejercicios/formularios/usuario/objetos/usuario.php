@@ -3,14 +3,12 @@ class Usuario
 {
     private $nombre;
     private $email;
-    private $rol;
     private $contraseña;
 
-    public function __construct($nombre, $email, $rol, $contraseña)
+    public function __construct($nombre, $email, $contraseña)
     {
         $this->nombre = $nombre;
         $this->email = $email;
-        $this->rol = $rol;
         $this->contraseña = password_hash($contraseña, PASSWORD_DEFAULT);
     }
 
@@ -24,7 +22,6 @@ class Usuario
         return [
             'nombre' => $this->nombre,
             'email' => $this->email,
-            'rol' => $this->rol,
             'contraseña' => $this->contraseña
         ];
     }
@@ -38,13 +35,12 @@ class Usuario
         return $this->email;
     }
 
-    public function getRol()
-    {
-        return $this->rol;
-    }
-
     public function getContraseña()
     {
         return $this->contraseña;
+    }
+
+    public function setContraseña($contraseña){
+        $this->contraseña=$contraseña;
     }
 }

@@ -1,37 +1,38 @@
 <?php
-require_once './usuario.php';
-require_once '../tools/funciones.php';
-/*
-iniciar sesión con email y con contraseña
-si el usuario esta en el fichero administradores se mostraran todos los usuarios que existen
-si no muestra toda la información del usuario que inició sesión
-*/
-$archivo = 'usuarios.dat';
-if (isset($_POST['email']) && isset($_POST['contraseña'])) {
-    $email = validarEmail($_POST['email']);
-    $contraseña = $_POST['contraseña'];
-    if (file_exists($archivo)) {
-        $usuarios = unserialize(file_get_contents($archivo));
-    }else{
-        $usuarios=[];
-        die('No existen usuarios');
-    }
+require_once './objetos/usuario_manager.php';
 
-    foreach ($usuarios as $usuario) {
-        if ($usuario->getEmail() === $email && $usuario->verificarContraseña($contraseña)) {
-            if ($usuario->getRol() === 'admin') {
-                echo "Eres administrador. Aquí están todos los usuarios:<br>";
-                foreach ($usuarios as $u) {
-                    echo "Nombre: {$u->getNombre()}, Email: {$u->getEmail()}, Rol: {$u->getRol()}<br>";
-                }
-            } else {
-                echo "Bienvenido, {$usuario->getNombre()}<br>";
-                echo "Email: {$usuario->getEmail()}<br>";
-                echo "<img src='{$usuario->getImagen()}' alt='Foto de {$usuario->getNombre()}'><br>";
-            }
+$usuariosManager = new UsuariosManager();
+$usuariosManager->cargarUsuarios();
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email']);
+    $contrasena = trim($_POST['contrasena']);
+    
+    foreach ($usuariosManager->getUsuarios() as $usuario) {
+        if ($usuario->getEmail() === $email && $usuario->verificarContraseña($contrasena)) {
+            header('Location: welcome.php?email=' . urlencode($email));
             exit;
         }
     }
-
-    echo "Credenciales incorrectas.";
+    $error = 'Credenciales incorrectas.';
 }
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <h1>Iniciar Sesión</h1>
+    <form method="POST" action="">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="contrasena" placeholder="Contraseña" required>
+        <button type="submit">Iniciar Sesión</button>
+    </form>
+    <?php if ($error): ?>
+        <p><?= $error ?></p>
+    <?php endif; ?>
+    <p><a href="registro.php">Registrarse</a></p>
+</body>
+</html>

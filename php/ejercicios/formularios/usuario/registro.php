@@ -1,53 +1,54 @@
 <?php
-require_once './usuario.php';
-require_once '../tools/funciones.php';
-/*
-Crear una pagina web que me permita el registro de objetos usuario, los usuarios tienen nombre, foto, email, rol y contraseña
-la contraseña se debe encriptar (usando una función nativa de php)
-solo se debe permitir el registro de usuarios que no esten en ficheros binarios
-*/
+require_once './objetos/usuario_manager.php';
 
-if (validarUsuario($_POST['usuario'])) {
-    $nombre = $_POST['usuario'];
-} else {
-    $nombre = 'n/a';
-}
-$email = validarEmail($_POST['email']);
-$rol = sanitizar($_POST['rol']);
-$contraseña = $_POST['contraseña'];
+$usuariosManager = new UsuariosManager();
+$usuariosManager->cargarUsuarios();
 
-// Manejo de la foto
-if (isset($_FILES['foto'])) {
-    $foto=$_FILES['foto'];
-    $fotoRuta = './uploads/' . basename($foto['name']);
-    if (!move_uploaded_file($foto['tmp_name'], $fotoRuta)) {
-        echo "Error al subir la foto.<br>";
-        echo "Ruta de archivo temporal: " . $foto['tmp_name'] . "<br>";
-        echo "Ruta de destino: " . $fotoRuta . "<br>";
-        die("Verifica los permisos de la carpeta o la ruta del archivo.");
-    }
-}else{
-    $foto=false;
-}
-if($foto==false){
-    $nuevoUsuario = new Usuario($nombre, $email, $fotoRuta, $rol, $contraseña);
-}else{
-    //$nuevoUsuario = new UsuariosFoto();
-}
+$nombre = $email = $contrasena = '';
+$error = '';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nombre = trim($_POST['nombre']);
+    $email = trim($_POST['email']);
+    $contrasena = trim($_POST['contrasena']);
 
-$fichero = 'usuarios.dat';
-$usuariosExistentes = [];
-if (file_exists($fichero)) {
-    $usuariosExistentes = unserialize(file_get_contents($fichero));
-}
-
-foreach ($usuariosExistentes as $u) {
-    if ($u->getEmail() === $email) {
-        die("El usuario ya está registrado.");
+    if (!$usuariosManager->emailExistente($email)) {
+        if ($_FILES['fotoPerfil']['error'] === UPLOAD_ERR_OK && $_FILES['fotoPerfil']['size'] <= MAX_PHOTO_SIZE) {
+            $rutaFoto = './uploads/' . basename($_FILES['fotoPerfil']['name']);
+            move_uploaded_file($_FILES['fotoPerfil']['tmp_name'], $rutaFoto);
+            $usuariosManager->agregarUsuario($nombre, $email, $contrasena, $rutaFoto);
+            header('Location: welcome.php?email=' . urlencode($email));
+            exit;
+        } elseif ($_FILES['fotoPerfil']['error'] === UPLOAD_ERR_NO_FILE) {
+            $usuariosManager->agregarUsuario($nombre, $email, $contrasena);
+            header('Location: welcome.php?email=' . urlencode($email));
+            exit;
+        } else {
+            $error = 'Error al subir la imagen o la imagen excede el tamaño permitido.';
+        }
+    } else {
+        $error = 'El email ya está registrado.';
     }
 }
-
-$usuariosExistentes[] = $nuevoUsuario;
-file_put_contents($fichero, serialize($usuariosExistentes));
-echo "Usuario registrado con éxito.";
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+</head>
+<body>
+    <h1>Registro</h1>
+    <form method="POST" action="" enctype="multipart/form-data">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="contrasena" placeholder="Contraseña" required>
+        <input type="file" name="fotoPerfil">
+        <button type="submit">Registrarse</button>
+    </form>
+    <?php if ($error): ?>
+        <p><?= $error ?></p>
+    <?php endif; ?>
+    <p><a href="sesion.php">Iniciar Sesión</a></p>
+</body>
+</html>
