@@ -11,14 +11,14 @@ if (isset($_POST['email']) && isset($_POST['contraseña'])) {
     $email = validarEmail($_POST['email']);
     $contraseña = $_POST['contraseña'];
     if (file_exists($archivo)) {
-        $usuarios = unserialize(file_get_contents($fichero));
+        $usuarios = unserialize(file_get_contents($archivo));
     }else{
         $usuarios=[];
+        die('No existen usuarios');
     }
 
     foreach ($usuarios as $usuario) {
         if ($usuario->getEmail() === $email && $usuario->verificarContraseña($contraseña)) {
-            $_SESSION['usuario'] = $usuario;
             if ($usuario->getRol() === 'admin') {
                 echo "Eres administrador. Aquí están todos los usuarios:<br>";
                 foreach ($usuarios as $u) {

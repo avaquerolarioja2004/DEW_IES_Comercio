@@ -3,15 +3,13 @@ class Usuario
 {
     private $nombre;
     private $email;
-    private $foto;
     private $rol;
     private $contraseña;
 
-    public function __construct($nombre, $email, $foto, $rol, $contraseña)
+    public function __construct($nombre, $email, $rol, $contraseña)
     {
         $this->nombre = $nombre;
         $this->email = $email;
-        $this->foto = $foto;
         $this->rol = $rol;
         $this->contraseña = password_hash($contraseña, PASSWORD_DEFAULT);
     }
@@ -26,7 +24,6 @@ class Usuario
         return [
             'nombre' => $this->nombre,
             'email' => $this->email,
-            'foto' => $this->foto,
             'rol' => $this->rol,
             'contraseña' => $this->contraseña
         ];
@@ -39,11 +36,6 @@ class Usuario
     public function getEmail()
     {
         return $this->email;
-    }
-
-    public function getImagen()
-    {
-        return $this->foto;
     }
 
     public function getRol()

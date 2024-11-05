@@ -13,11 +13,12 @@
     <h2>Registrar</h2>
     <form action="registro.php" method="post" enctype="multipart/form-data">
         <label for="usuario">Nombre: </label><br>
-        <input type="text" name="usuario" id="usuario" required><br>
+        <input type="text" name="usuario" id="usuario" pattern="[A-Za-zÀ-ÿ\s]{2,}"
+            title="El nombre solo puede contener letras y espacios, y debe tener al menos 2 caracteres." required> <br>
         <label for="email">E-Mail: </label><br>
         <input type="email" name="email" id="email" required><br>
         <label for="foto">Foto: </label><br>
-        <input type="file" name="foto" id="foto" accept="image/*" required><br>
+        <input type="file" name="foto" id="foto" accept="image/*"><br>
         <label for="rol">Rol (admin o usuario): </label><br>
         <select name="rol" id="rol" required>
             <option value="usuario">Usuario</option>
