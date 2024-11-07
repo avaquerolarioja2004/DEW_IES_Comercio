@@ -1,5 +1,5 @@
-lechuga,1.5,5
-tomate,2.3,25
+lechuga,1.5,1
+tomate,2.3,5
 zanahoria,0.8,120
 pimiento,1.7,40
 patata,0.9,200
