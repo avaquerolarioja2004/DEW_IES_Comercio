@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <h1>Registro</h1>
     <form method="POST" action="" enctype="multipart/form-data">
-        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="text" name="nombre" placeholder="Nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚÑñ ]{2,64}" required>
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="contrasena" placeholder="Contraseña" required>
         <input type="file" name="fotoPerfil">
