@@ -1,0 +1,64 @@
+{
+    "articulos": [
+        {
+            "id": 1,
+            "titulo": "Tendencias de Moda en Invierno",
+            "tematica": "Moda",
+            "resumen": "Descubre las últimas tendencias en moda para la temporada de invierno."
+        },
+        {
+            "id": 2,
+            "titulo": "Guía para Comprar Electrodomésticos",
+            "tematica": "Electrónica",
+            "resumen": "Consejos y recomendaciones para comprar los mejores electrodomésticos para tu hogar."
+        },
+        {
+            "id": 3,
+            "titulo": "Destinos de Verano 2024",
+            "tematica": "Viajes",
+            "resumen": "Explora los mejores destinos de verano para el próximo año y disfruta de descuentos especiales."
+        },
+        {
+            "id": 4,
+            "titulo": "Ofertas Black Friday en Tecnología",
+            "tematica": "Ofertas",
+            "resumen": "Aprovecha las ofertas del Black Friday en dispositivos electrónicos y tecnología."
+        },
+        {
+            "id": 5,
+            "titulo": "Juguetes Más Populares para Navidad",
+            "tematica": "Navidad",
+            "resumen": "Lista de los juguetes más populares para regalar en esta Navidad."
+        },
+        {
+            "id": 6,
+            "titulo": "Consejos para el Bienestar y Salud",
+            "tematica": "Salud",
+            "resumen": "Consejos para mantener un estilo de vida saludable con productos recomendados."
+        },
+        {
+            "id": 7,
+            "titulo": "Ideas para Decorar tu Hogar",
+            "tematica": "Hogar",
+            "resumen": "Inspírate con estas ideas de decoración para transformar tu hogar."
+        },
+        {
+            "id": 8,
+            "titulo": "Tendencias en la Moda Actual",
+            "tematica": "Moda",
+            "resumen": "Conoce las tendencias de moda que están arrasando esta temporada."
+        },
+        {
+            "id": 9,
+            "titulo": "Innovaciones Tecnológicas para el Futuro",
+            "tematica": "Tecnología",
+            "resumen": "Explora las innovaciones tecnológicas que cambiarán el futuro."
+        },
+        {
+            "id": 10,
+            "titulo": "Beneficios de los Alimentos Orgánicos",
+            "tematica": "Salud",
+            "resumen": "Descubre los beneficios de consumir productos orgánicos para la salud."
+        }
+    ]
+}
