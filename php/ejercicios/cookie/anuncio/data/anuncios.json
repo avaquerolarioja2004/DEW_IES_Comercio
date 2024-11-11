@@ -4,7 +4,7 @@
       "id": 1,
       "titulo": "Oferta de Invierno",
       "descripcion": "Descuentos en ropa de invierno. ¡Hasta 50% de descuento!",
-      "imagen_url": "imagenes/invierno.png",
+      "imagen_url": "/dwes1/php/ejercicios/cookie/anuncio/data/imagenes/invierno.png",
       "categorias": [
         "Moda",
         "Invierno"
@@ -14,7 +14,7 @@
       "id": 2,
       "titulo": "Electrodomésticos en Promoción",
       "descripcion": "Encuentra las mejores ofertas en electrodomésticos.",
-      "imagen_url": "imagenes/electrodomesticos.png",
+      "imagen_url": "/dwes1/php/ejercicios/cookie/anuncio/data/imagenes/electrodomesticos.png",
       "categorias": [
         "Electrónica",
         "Hogar"
@@ -24,7 +24,7 @@
       "id": 3,
       "titulo": "Viajes de Verano",
       "descripcion": "Reserva tus vacaciones de verano con descuentos exclusivos.",
-      "imagen_url": "imagenes/verano.png",
+      "imagen_url": "/dwes1/php/ejercicios/cookie/anuncio/data/imagenes/verano.png",
       "categorias": [
         "Viajes",
         "Verano"
@@ -34,7 +34,7 @@
       "id": 4,
       "titulo": "Black Friday Electrónica",
       "descripcion": "Ofertas del Black Friday en dispositivos electrónicos.",
-      "imagen_url": "imagenes/black_friday.png",
+      "imagen_url": "/dwes1/php/ejercicios/cookie/anuncio/data/imagenes/black_friday.png",
       "categorias": [
         "Electrónica",
         "Black Friday"
@@ -44,7 +44,7 @@
       "id": 5,
       "titulo": "Juguetes para Navidad",
       "descripcion": "Gran variedad de juguetes para Navidad con descuentos.",
-      "imagen_url": "imagenes/navidad.jpg",
+      "imagen_url": "/dwes1/php/ejercicios/cookie/anuncio/data/imagenes/navidad.png",
       "categorias": [
         "Navidad",
         "Juguetes"
@@ -54,7 +54,7 @@
       "id": 6,
       "titulo": "Bienestar y Salud",
       "descripcion": "Productos de salud y bienestar con promociones especiales.",
-      "imagen_url": "imagenes/bienestar.png",
+      "imagen_url": "/dwes1/php/ejercicios/cookie/anuncio/data/imagenes/bienestar.png",
       "categorias": [
         "Salud",
         "Bienestar"
@@ -64,7 +64,7 @@
       "id": 7,
       "titulo": "Decoración de Hogar",
       "descripcion": "Renueva la decoración de tu hogar con nuestras ofertas.",
-      "imagen_url": "imagenes/decoracion.png",
+      "imagen_url": "/dwes1/php/ejercicios/cookie/anuncio/data/imagenes/decoracion.png",
       "categorias": [
         "Hogar",
         "Decoración"
@@ -74,7 +74,7 @@
       "id": 8,
       "titulo": "Semana de la Moda",
       "descripcion": "Nuevas colecciones y promociones en moda.",
-      "imagen_url": "imagenes/moda.png",
+      "imagen_url": "/dwes1/php/ejercicios/cookie/anuncio/data/imagenes/moda.png",
       "categorias": [
         "Moda",
         "Tendencias"
@@ -84,7 +84,7 @@
       "id": 9,
       "titulo": "Tecnología Innovadora",
       "descripcion": "Descubre la última tecnología con descuentos exclusivos.",
-      "imagen_url": "imagenes/tecnologias.png",
+      "imagen_url": "/dwes1/php/ejercicios/cookie/anuncio/data/imagenes/tecnologias.png",
       "categorias": [
         "Tecnología",
         "Innovación"
@@ -94,7 +94,7 @@
       "id": 10,
       "titulo": "Alimentos Orgánicos",
       "descripcion": "Productos orgánicos a precios especiales.",
-      "imagen_url": "imagenes/organicos.png",
+      "imagen_url": "/dwes1/php/ejercicios/cookie/anuncio/data/imagenes/organicos.png",
       "categorias": [
         "Alimentos",
         "Orgánico"
