@@ -10,33 +10,31 @@ function mostrarAnuncios()
     global $anuncios;
 
     if (isset($_COOKIE['gustos'])) {
-        // Deserializar la cookie y garantizar que $gustos sea un array
         $gustos = unserialize($_COOKIE['gustos']);
         if (!is_array($gustos)) {
-            $gustos = [$gustos]; // Convierte a array si $gustos es un solo valor
+            $gustos = [$gustos];
         }
 
         foreach ($anuncios as $anuncio) {
-            // Asegúrate de que categorías es un array
             $categorias = is_array($anuncio['categorias']) ? $anuncio['categorias'] : [$anuncio['categorias']];
 
-            // Verifica si alguna categoría coincide con los gustos
             if (array_intersect($gustos, $categorias) && count($anuncios_elegidos) < 3 && !in_array($anuncio, $anuncios_elegidos)) {
                 $anuncios_elegidos[] = $anuncio;
             }
         }
     }
 
-    // Si no hay suficientes anuncios seleccionados, elige 3 al azar
-    if (count($anuncios_elegidos) < 3) {
+    if (count($anuncios_elegidos) < 2) {
         $faltantes = array_diff_key($anuncios, array_flip(array_column($anuncios_elegidos, 'id')));
-        $random_keys = array_rand($faltantes, 3 - count($anuncios_elegidos));
+        $random_keys = array_rand($faltantes, 2 - count($anuncios_elegidos));
+        if (!is_array($random_keys)) {
+            $random_keys = [$random_keys];
+        }
         foreach ($random_keys as $key) {
             $anuncios_elegidos[] = $faltantes[$key];
         }
     }
 
-    // Mostrar los anuncios seleccionados
     echo '<div class="anuncios">';
     foreach ($anuncios_elegidos as $anuncio) {
         echo '<a href="mostrar.php?anuncio=' . htmlspecialchars($anuncio["id"]) . '">';
@@ -53,18 +51,26 @@ function mostrarAnuncios()
 
 function mostrarArticulos()
 {
+    if (isset($_COOKIE['inicio_visualizacion'])) {
+        $ip_usuario = $_SERVER['REMOTE_ADDR'] ?? 'IP desconocida';
+        $log_file = './logs/registros.log';
+        $info = explode(',',$_COOKIE['inicio_visualizacion']);
+        $inicio=(int)$info[0];
+        $tiempo_transcurrido = time() - $inicio;
+        $log_entry = date('Y-m-d H:i:s') . " - Anuncio ID: $info[1] - Tiempo de visualización: $tiempo_transcurrido segundos - IP: $ip_usuario\n";
+        file_put_contents($log_file, $log_entry, FILE_APPEND);
+        setcookie('inicio_visualizacion', time() - 3600, COOKIE_OPCIONES);
+    }
     $articulos_elegidos = [];
     global $articulos;
     if (isset($_COOKIE['gustos'])) {
         $gustos = unserialize($_COOKIE['gustos']);
 
-        // Asegurarse de que $gustos es un array
         if (!is_array($gustos)) {
-            $gustos = [$gustos]; // Convierte a array si es un solo gusto
+            $gustos = [$gustos];
         }
 
         foreach ($articulos as $articulo) {
-            // Asegúrate de que tematica sea tratada como un array
             $tematica = is_array($articulo['tematica']) ? $articulo['tematica'] : [$articulo['tematica']];
 
             if (array_intersect($gustos, $tematica) && count($articulos_elegidos) < 3 && !in_array($articulo, $articulos_elegidos)) {
@@ -73,10 +79,12 @@ function mostrarArticulos()
         }
     }
 
-    // Asegura que haya al menos 3 artículos seleccionados
     if (count($articulos_elegidos) < 3) {
         $articulos_faltantes = array_diff_key($articulos, array_flip(array_column($articulos_elegidos, 'id')));
         $articulos_random = array_rand($articulos_faltantes, 3 - count($articulos_elegidos));
+        if (!is_array($articulos_random)) {
+            $articulos_random = [$articulos_random];
+        }
         foreach ($articulos_random as $key) {
             $articulos_elegidos[] = $articulos_faltantes[$key];
         }
@@ -97,25 +105,18 @@ function mostrarArticulos()
 
 function crearCookie($gustos)
 {
-    // Asegurarse de que $gustos es un array
     if (!is_array($gustos)) {
-        $gustos = [$gustos]; // Convierte $gustos en un array si es una cadena u otro tipo
+        $gustos = [$gustos];
     }
 
     if (!isset($_COOKIE['gustos'])) {
-        // Serializa y establece la cookie por primera vez
         setcookie('gustos', serialize($gustos), COOKIE_OPCIONES);
     } else {
-        // Deserializa la cookie existente
         $gustosA = unserialize($_COOKIE['gustos']);
-
-        // Asegura que $gustosA sea un array
         if (!is_array($gustosA)) {
             $gustosA = [$gustosA];
         }
-
-        // Combina los gustos antiguos con los nuevos, si es necesario
-        if (count($gustos) != 2) {
+        if (count($gustosA) != 2) {
             $final = array_merge($gustosA, $gustos);
             setcookie('gustos', serialize($final), COOKIE_OPCIONES);
         }
@@ -125,6 +126,7 @@ function crearCookie($gustos)
 
 function mostrarAnuncio($id)
 {
+    contarTiempoVisualizacion($id);
     global $anuncios;
     foreach ($anuncios as $anuncio) {
         if ($anuncio['id'] == $id) {
@@ -165,4 +167,7 @@ function getTema($id)
     }
 }
 
-function contarTiempoVisualizacion() {}
+function contarTiempoVisualizacion($anuncioId)
+{
+    setcookie('inicio_visualizacion', time().','.$anuncioId, COOKIE_OPCIONES);
+}
