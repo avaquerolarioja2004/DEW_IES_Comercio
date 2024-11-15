@@ -1,0 +1,20 @@
+<?php
+require_once 'tools/funciones.php';
+crearBaseDatos();
+crearTablaDepartamento();
+crearTablaEmpleado();
+echo insertarDepartamento('Ventas');
+echo insertarDepartamento('Recursos Humanos');
+echo insertarDepartamento('Contabilidad');
+echo insertarEmpleado('Juan', 'Perez', 1, 1000);
+echo insertarEmpleado('Maria', 'Gomez', 2, 2000);
+echo insertarEmpleado('Pedro', 'Gonzalez', 3, 3000);
+echo insertarEmpleado('Ana', 'Lopez', 1, 4000);
+print_r(buscarEmpleadoPorDepartamento(1));
+print_r(getInfoTabla('empleados'));
+borrarEmpleado(2);
+actualizarSalario(1, 1500);
+print_r(getInfoTabla('empleados'));
+print_r(getInfoTabla('departamentos'));
+transaccion(2000, 1);
+print_r(getInfoTabla('empleados'));
