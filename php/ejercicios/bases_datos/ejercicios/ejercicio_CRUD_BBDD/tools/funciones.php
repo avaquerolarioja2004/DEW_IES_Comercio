@@ -53,7 +53,8 @@ function crearTablaUsuario($pdo)
     }
 }
 
-function crearTablaHabitaciones($pdo){
+function crearTablaHabitaciones($pdo)
+{
     try {
         $smt = $pdo->prepare("CREATE TABLE habitaciones (
                             id INT PRIMARY KEY AUTO_INCREMENT,
@@ -67,7 +68,8 @@ function crearTablaHabitaciones($pdo){
     }
 }
 
-function crearTablaReservas($pdo){
+function crearTablaReservas($pdo)
+{
     try {
         $smt = $pdo->prepare("CREATE TABLE reservas (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -85,45 +87,94 @@ function crearTablaReservas($pdo){
     }
 }
 
-function getAllUsuarios(){
+function registrarUsuario($nombre, $email, $password, $rol = 'usuario'): Usuario|false
+{
     try {
-        $pdo=BBDD::getBBDD();
-        $smt = $pdo->prepare("SELECT * FROM usuarios");
-        $smt->execute();
-        $usuarios = $smt->fetchAll(PDO::FETCH_ASSOC);
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("INSERT INTO usuarios (nombre, email, password, rol) VALUES (?, ?, ?, ?)");
+        $smt->execute([$nombre, $email, password_hash($password, PASSWORD_DEFAULT), $rol]);
+        return getUsuario($pdo->lastInsertId());
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
 
+function getUsuario($id)
+{
+    try {
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("SELECT id, nombre, email, password, rol FROM usuarios WHERE id = ?");
+        $smt->execute([$id]);
+        $usuario = $smt->fetch(PDO::FETCH_CLASS, 'Usuario');
+        return $usuario;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function getUsuarioPorEmail($email)
+{
+    try {
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("SELECT id, nombre, email, password, rol FROM usuarios WHERE email = ?");
+        $smt->execute([$email]);
+        $usuario = $smt->fetch(PDO::FETCH_CLASS, 'Usuario');
+
+        return $usuario;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function getAllUsuarios(): array
+{
+    try {
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("SELECT id, nombre, email, password, rol FROM usuarios");
+        $smt->execute();
+        $usuarios = $smt->fetchAll(PDO::FETCH_CLASS, 'Usuario');
         return $usuarios;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
 }
 
-function borrarUsuarioPorId($id){
+function borrarUsuarioPorId($id): Usuario | false
+{
     try {
-        $pdo=BBDD::getBBDD();
+        $user = getUsuario($id);
+        $pdo = BBDD::getBBDD();
         $smt = $pdo->prepare("DELETE FROM usuarios WHERE id = ?");
         $smt->execute([$id]);
+        return $user;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
+        return false;
     }
 }
 
-function borrarUsuarioPorEmail($email){
+function borrarUsuarioPorEmail($email): Usuario | false
+{
     try {
-        $pdo=BBDD::getBBDD();
+        $user = getUsuarioPorEmail($email);
+        $pdo = BBDD::getBBDD();
         $smt = $pdo->prepare("DELETE FROM usuarios WHERE email = ?");
         $smt->execute([$email]);
+        return $user;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
+        return false;
     }
 }
 
-function getAllHabitaciones(){
+function getAllHabitaciones()
+{
     try {
-        $pdo=BBDD::getBBDD();
-        $smt = $pdo->prepare("SELECT * FROM habitaciones");
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("SELECT id, nombre, descripcion, precio, imagen FROM habitaciones");
         $smt->execute();
-        $habitaciones = $smt->fetchAll(PDO::FETCH_ASSOC);
+        $habitaciones = $smt->fetchAll(PDO::FETCH_CLASS, 'Habitacion');
 
         return $habitaciones;
     } catch (PDOException $e) {
@@ -131,15 +182,99 @@ function getAllHabitaciones(){
     }
 }
 
-function getHabitacionesDisponibles($fechaInicio, $fechaFin){
+function getHabitacion($id): Habitacion | false
+{
     try {
-        $pdo=BBDD::getBBDD();
-        $smt = $pdo->prepare("SELECT * FROM habitaciones WHERE id NOT IN (SELECT habitacion_id FROM reservas WHERE fecha_inicio <= ? AND fecha_fin >= ?)");
-        $smt->execute([$fechaInicio, $fechaFin]);
-        $habitaciones = $smt->fetchAll(PDO::FETCH_ASSOC);
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("SELECT id, nombre, descripcion, precio, imagen FROM habitaciones WHERE id = ?");
+        $smt->execute([$id]);
+        $habitacion = $smt->fetch(PDO::FETCH_CLASS, 'Habitacion');
 
-        return $habitaciones;
+        return $habitacion;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+function registrarHabitacion($nombre, $descripcion, $precio, $imagen): Habitacion | false
+{
+    try {
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("INSERT INTO habitaciones (nombre, descripcion, precio, imagen) VALUES (?, ?, ?, ?)");
+        $smt->execute([$nombre, $descripcion, $precio, $imagen]);
+        return getHabitacion($pdo->lastInsertId());
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+function borrarHabitacion($id): Habitacion | false
+{
+    try {
+        $habitacion = getHabitacion($id);
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("DELETE FROM habitaciones WHERE id = ?");
+        $smt->execute([$id]);
+        return $habitacion;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+function reservar($usuarioId, $habitacionId, $fechaInicio, $fechaFin): Reservas | false
+{
+    try {
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("INSERT INTO reservas (usuario_id, habitacion_id, fecha_inicio, fecha_fin) VALUES (?, ?, ?, ?)");
+        $smt->execute([$usuarioId, $habitacionId, $fechaInicio, $fechaFin]);
+        return getReserva($pdo->lastInsertId());
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+function getReserva($id): Reservas | false
+{
+    try {
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("SELECT id, usuario_id, habitacion_id, fecha_inicio, fecha_fin FROM reservas WHERE id = ?");
+        $smt->execute([$id]);
+        $reserva = $smt->fetch(PDO::FETCH_CLASS, 'Reservas');
+        return $reserva;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+function getReservasPorUsuario($id): array|false
+{
+    try{
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("SELECT id, usuario_id, habitacion_id, fecha_inicio, fecha_fin FROM reservas WHERE usuario_id = ?");
+        $smt->execute([$id]);
+        $reservas = $smt->fetchAll(PDO::FETCH_CLASS, 'Reservas');
+        return $reservas;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+function cancelarReserva($id): Reservas | false
+{
+    try {
+        $reserva = getReserva($id);
+        $pdo = BBDD::getBBDD();
+        $smt = $pdo->prepare("DELETE FROM reservas WHERE id = ?");
+        $smt->execute([$id]);
+        return $reserva;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
     }
 }
