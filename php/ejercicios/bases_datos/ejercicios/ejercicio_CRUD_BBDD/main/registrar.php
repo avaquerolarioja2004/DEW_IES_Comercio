@@ -1,9 +1,9 @@
 <?php
-require_once 'tools/funciones.php';
-
-if (!isset($_SESSION['email'])) {
-    header('Location: login.php');
-} else if ($_SESSION['rol'] == 'admin') {
+require_once '../tools/funciones.php';
+require_once '../objetos/bbdd.php';
+session_start();
+BBDD::startBBDD();
+if (isset($_SESSION['rol']) && $_SESSION['rol' == 'admin']) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nombre = $_POST['nombre'];
         $email = $_POST['email'];
@@ -17,8 +17,8 @@ if (!isset($_SESSION['email'])) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = $_POST['nombre'];
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    registrarUsuario($nombre, $email, $password);
+    $password = $_POST['password'];
+    registrarUsuario($nombre, $email, $password, 'usuario');
 
     header('Location: login.php');
 }
@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="password" name="password" id="password" required>
         <input type="submit" value="Registrarse">
     </form>
+    <a href="login.php">Login</a>
 </body>
 
 </html>

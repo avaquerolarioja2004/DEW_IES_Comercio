@@ -1,5 +1,4 @@
 <?php
-require_once 'tools/funciones.php';
 class Usuario{
     private $id;
     private $nombre;
@@ -7,12 +6,12 @@ class Usuario{
     private $password;
     private $rol;
 
-    public function __construct($id,$nombre, $email, $password, $rol = 'usuario')
+    public function __construct($id,$nombre, $email, $password, $rol)
     {
         $this->id = $id;
         $this->nombre = $nombre;
         $this->email = $email;
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password=$password;
         $this->rol = $rol;
     }
 

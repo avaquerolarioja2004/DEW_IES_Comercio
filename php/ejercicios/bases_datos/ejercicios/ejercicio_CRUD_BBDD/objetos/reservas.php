@@ -1,5 +1,4 @@
 <?php
-require_once 'tools/funciones.php';
 
 class Reservas
 {
