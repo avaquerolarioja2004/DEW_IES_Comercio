@@ -1,0 +1,3 @@
+Nombre,Edad,Email
+Juan,25,juan@example.com
+Maria,30,maria@example.com

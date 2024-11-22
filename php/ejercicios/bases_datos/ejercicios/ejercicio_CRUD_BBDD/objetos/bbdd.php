@@ -52,18 +52,18 @@ class BBDD {
         $minId = $result['min_id'];
         $maxId = $result['max_id'];
 
-        // Obtener el ID mínimo y máximo de los usuarios
+        // Obtener el ID mínimo y máximo de las habitaciones
         $pdo = self::$pdo;
-        $smt = $pdo->prepare("SELECT MIN(id) as min_id, MAX(id) as max_id FROM usuarios");
+        $smt = $pdo->prepare("SELECT MIN(id) as min_id, MAX(id) as max_id FROM habitaciones");
         $smt->execute();
         $result = $smt->fetch(PDO::FETCH_ASSOC);
-        $minId = $result['min_id'];
-        $maxId = $result['max_id'];
+        $minIdH = $result['min_id'];
+        $maxIdH = $result['max_id'];
 
         // Insertar reservas aleatorias
         for ($i = 1; $i <= 10; $i++) {
             $usuarioId = rand($minId, $maxId);
-            $habitacionId = rand(1, 10);
+            $habitacionId = rand($minIdH, $maxIdH);
             $fechaInicio = date('Y-m-d', strtotime('+' . rand(1, 30) . ' days'));
             $fechaFin = date('Y-m-d', strtotime($fechaInicio . ' + ' . rand(1, 7) . ' days'));
             reservar($usuarioId, $habitacionId, $fechaInicio, $fechaFin);

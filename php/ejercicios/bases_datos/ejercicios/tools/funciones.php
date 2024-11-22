@@ -6,7 +6,6 @@ function crearBaseDatos()
         $dsn = "mysql:host=localhost;charset=utf8";
         $pdo = new PDO($dsn, 'root', 'mysql');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
         $sql = "CREATE DATABASE IF NOT EXISTS empresa";
         $pdo->exec($sql);
 
