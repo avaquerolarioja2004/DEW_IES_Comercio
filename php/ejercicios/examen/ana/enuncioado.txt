@@ -1,0 +1,23 @@
+Fichero de ventas de producto por mes (formato json)
+[
+    producto{
+        año
+        mes
+        total_ventas
+    }
+]
+
+con filtros:
+sacar total de ventas de un año de un producto
+sacar todos los productos vendidos de un mes
+
+
+
+Atraves de un formulario pueda selecionar un directorio y muestres la estructura de directorios 
+con un limite de 10 lineas en cada pagina
+
+
+Cuestionario en php que nos permita seleccionar de que materias queremos las preguntas, 
+dependiendo de la materia sacaré la pregunta con sus opciones e iré anotando cuantas son correctas y cuantas incorrectas y calcularé el porcentaje de conocimiento del alumno por categoria y se guardará en un json, 
+las preguntas no se pueden repetir si ya han salido, estilo trivial. Si ha fallado cuando finalice el cuestionario saldran las erroneas
+y mediante sesiones seleccionar aleatoriamente el color de los botones para los temas, destruir la sesion al acabar el cuestionario
