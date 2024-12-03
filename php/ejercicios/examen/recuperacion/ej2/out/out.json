@@ -1,0 +1,66 @@
+{
+    "categorias": {
+        "Electr\u00f3nica": {
+            "Tel\u00e9fonos": [
+                {
+                    "nombre": "iPhone 14",
+                    "marca": "Apple",
+                    "precio": 999.99,
+                    "cantidad": 50,
+                    "descuento": "20%",
+                    "precio_con_descuento": 799.9920000000001
+                },
+                {
+                    "nombre": "Galaxy S22",
+                    "marca": "Samsung",
+                    "precio": 799.99,
+                    "cantidad": 30
+                }
+            ],
+            "Computadoras": [
+                {
+                    "nombre": "MacBook Pro 16",
+                    "marca": "Apple",
+                    "precio": 2499.99,
+                    "cantidad": 20
+                },
+                {
+                    "nombre": "Dell XPS 13",
+                    "marca": "Dell",
+                    "precio": 1399.99,
+                    "cantidad": 15
+                }
+            ]
+        },
+        "Hogar": {
+            "Muebles": [
+                {
+                    "nombre": "Sof\u00e1 de tres plazas",
+                    "marca": "IKEA",
+                    "precio": 599.99,
+                    "cantidad": 10
+                },
+                {
+                    "nombre": "Mesa de comedor",
+                    "marca": "IKEA",
+                    "precio": 299.99,
+                    "cantidad": 25
+                }
+            ],
+            "Electrodom\u00e9sticos": [
+                {
+                    "nombre": "Refrigerador LG",
+                    "marca": "LG",
+                    "precio": 899.99,
+                    "cantidad": 5
+                },
+                {
+                    "nombre": "Lavadora Samsung",
+                    "marca": "Samsung",
+                    "precio": 499.99,
+                    "cantidad": 10
+                }
+            ]
+        }
+    }
+}
